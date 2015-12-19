@@ -1,22 +1,19 @@
 $(document).ready(function() {  
-  sizeitup();
+	sizeitup();
 });
 
 $(window).resize(function() {
-  sizeitup();
+	sizeitup();
 });
 window.onload = function() {
-  sizeitup();
+	sizeitup();
 };
 
 function sizeitup() {
-  var bodyH = $(window).height();
-  var resumeH = $("#resume-module").height();
-
-  $("#resume-viewer").css("height",resumeH);
-  
+	var bodyH = $(window).height();
 }
 
-$("#navicon").click(function() {
-	
+$("#more").click(function() {
+	$("#main").addClass("other");
+	$("#other-queries").addClass("other");
 })

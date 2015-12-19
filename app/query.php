@@ -1,4 +1,13 @@
 <?php
+// CONNECT TO THE DATABASE
+// CONFIG.PHP IS HIDDEN FROM GIT REPO FOR SECURITY
+require 'config.php';
+try {
+    $conn = new PDO("mysql:host=$server;dbname=$database", $username, $password);
+}
+catch(PDOException $e) {
+    header('location: sorry.html');
+}
 // CHECK FOR MISSING DATA
 if (isset($_POST['submit'])) {
 	$data_missing = array();
@@ -22,33 +31,95 @@ if (isset($_POST['submit'])) {
 	} else {
 		$year = trim($_POST['year']);
 	}
-}
-// CONNECT TO THE DATABASE
-// CONFIG.PHP IS HIDDEN FROM GIT REPO FOR SECURITY
-require 'config.php';
-try {
-    $conn = new PDO("mysql:host=$server;dbname=$database", $username, $password);
-}
-catch(PDOException $e) {
-    header('location: sorry.html');
-}
-// QUERY
-if (empty($data_missing)) {
-	$sql = "SELECT Rate FROM akpsi.onco_cancer_site_breakdown WHERE RaceEthnicity = ? AND Sex = ? AND CancerSite = ? AND Year = ?";
-	$stmt = $conn->prepare($sql);
-	try {
-		$stmt->execute(array($race, $gender, $cancer, $year));
-		while ($row = $stmt->fetch(PDO::FETCH_NUM, PDO::FETCH_ORI_NEXT)) {
-			$data = $row[0];
-
-	    }
-	    $stmt = null;
-	} catch(PDOException $e) {
+	if (empty($data_missing)) {
+		$sql = "SELECT Rate FROM akpsi.onco_cancer_site_breakdown WHERE RaceEthnicity = ? AND Sex = ? AND CancerSite = ? AND Year = ?";
+		$stmt = $conn->prepare($sql);
+		try {
+			$stmt->execute(array($race, $gender, $cancer, $year));
+			while ($row = $stmt->fetch(PDO::FETCH_NUM, PDO::FETCH_ORI_NEXT)) {
+				$data = $row[0];
+		    }
+		    $stmt = null;
+		} catch(PDOException $e) {
+			header('location: sorry.html');
+		}
+	} else {
 		header('location: sorry.html');
 	}
+	if ($data == -1) {
+		$output = "<p>Not enough data was collected to be considered statistically significant</p>";
+	} else {
+		$output = '<p>' . $data . ' of every 100,000 ';
+		if (strcmp($race, 'All (includes Hispanic)') == 0) {
+			if (strcmp($gender, 'Both Sexes') == 0) {
+				$output .= 'people ';
+			} else if (strcmp($gender, 'Male') == 0) {
+				$output .= 'males ';
+			} else {
+				$output .= 'females ';
+			}
+		} else if (strcmp($race, 'White (includes Hispanic)') == 0) {
+			if (strcmp($gender, 'Both Sexes') == 0) {
+				$output .= 'whites ';
+			} else if (strcmp($gender, 'Male') == 0) {
+				$output .= 'white males ';
+			} else {
+				$output .= 'white females ';
+			}
+		} else {
+			if (strcmp($gender, 'Both Sexes') == 0) {
+				$output .= 'blacks ';
+			} else if (strcmp($gender, 'Male') == 0) {
+				$output .= 'black males ';
+			} else {
+				$output .= 'black females ';
+			}
+		}
+		$output .= 'had ';
+		if (strcmp($cancer, 'All Sites') == 0) {
+			$output .= 'any kind of ';
+		} else {
+			$output .= $cancer;
+		}
+		$output .= ' cancer in ' . $year . ' in the US.</p>';	
+	}
+} else if (isset($_GET['a'])) {
+	if ($_GET['a'] == 1) {
+		$sql = 'SELECT SUM(A) FROM (SELECT Rate AS A FROM onco_cancer_site_breakdown WHERE CancerSite = "All Sites" AND Year < 2012 AND Year > 2001 AND RaceEthnicity = "All (includes Hispanic)" AND Sex = "Both Sexes") AS result;';
+		$stmt = $conn->prepare($sql);
+		try {
+			$stmt->execute();
+			while ($row = $stmt->fetch(PDO::FETCH_NUM, PDO::FETCH_ORI_NEXT)) {
+				$data = $row[0];
+		    }
+		    $stmt = null;
+		} catch(PDOException $e) {
+			header('location: sorry.html');
+		}
+		$output = '<p>' . $data . ' of every 100,000 people had any kind of cancer in the last decade in the US.</p>';
+	} else if ($_GET['a'] == 2) {
+		$output = '2';
+	} else if ($_GET['a'] == 3) {
+		$output = '3';
+	} else if ($_GET['a'] == 4) {
+		$output = '4';
+	} else if ($_GET['a'] == 5) {
+		$output = '5';
+	} else if ($_GET['a'] == 6) {
+		$output = '6';
+	} else if ($_GET['a'] == 7) {
+		$output = '7';
+	} else if ($_GET['a'] == 8) {
+		$output = '8';
+	} else if ($_GET['a'] == 9) {
+		$output = '9';
+	} else {
+		$output = '<p>Invalid Query</p>';
+	}
 } else {
-	header('location: sorry.html');
+	$output = '<p>Invalid Query</p>';
 }
+// QUERY
 ?>
 
 <!doctype html>
@@ -78,48 +149,13 @@ if (empty($data_missing)) {
 </head>
 
 <body>
-
     <div id="main">
         <div class="grid">
             <h1>Oncobase</h1>
-            <p>
-	            <?php
-	            $output = $data . ' of every 100,000 ';
-	            if (strcmp($race, 'All (includes Hispanic)') == 0) {
-	            	if (strcmp($gender, 'Both Sexes') == 0) {
-	            		$output .= 'people ';
-	            	} else if (strcmp($gender, 'Male') == 0) {
-	            		$output .= 'males ';
-	            	} else {
-	            		$output .= 'females ';
-	            	}
-	            } else if (strcmp($race, 'White (includes Hispanic)') == 0) {
-	            	if (strcmp($gender, 'Both Sexes') == 0) {
-	            		$output .= 'whites ';
-	            	} else if (strcmp($gender, 'Male') == 0) {
-	            		$output .= 'white males ';
-	            	} else {
-	            		$output .= 'white females ';
-	            	}
-	            } else {
-	            	if (strcmp($gender, 'Both Sexes') == 0) {
-	            		$output .= 'blacks ';
-	            	} else if (strcmp($gender, 'Male') == 0) {
-	            		$output .= 'black males ';
-	            	} else {
-	            		$output .= 'black females ';
-	            	}
-	            }
-	            $output .= 'had ';
-	            if (strcmp($cancer, 'All Sites') == 0) {
-	            	$output .= 'any kind of ';
-	            } else {
-	            	$output .= $cancer;
-	            }
-	            $output .= ' cancer in ' . $year . ' in the US.';
-	            print $output;
-	            ?>
-            </p>
+	        <?php print $output; ?>
+            <div id="back-home">
+                <a href="index.html">Find another cancer stat</a>
+            </div>
         </div>
     </div>
     
