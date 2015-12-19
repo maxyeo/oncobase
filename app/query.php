@@ -32,7 +32,7 @@ if (isset($_POST['submit'])) {
 		$year = trim($_POST['year']);
 	}
 	if (empty($data_missing)) {
-		$sql = "SELECT Rate FROM akpsi.onco_cancer_site_breakdown WHERE RaceEthnicity = ? AND Sex = ? AND CancerSite = ? AND Year = ?";
+		$sql = 'SELECT Rate FROM akpsi.onco_cancer_site_breakdown WHERE RaceEthnicity = ? AND Sex = ? AND CancerSite = ? AND Year = ?';
 		$stmt = $conn->prepare($sql);
 		try {
 			$stmt->execute(array($race, $gender, $cancer, $year));
@@ -85,7 +85,11 @@ if (isset($_POST['submit'])) {
 	}
 } else if (isset($_GET['a'])) {
 	if ($_GET['a'] == 1) {
-		$sql = 'SELECT SUM(A) FROM (SELECT Rate AS A FROM onco_cancer_site_breakdown WHERE CancerSite = "All Sites" AND Year < 2012 AND Year > 2001 AND RaceEthnicity = "All (includes Hispanic)" AND Sex = "Both Sexes") AS result;';
+		$sql = 'SELECT SUM(A)
+				FROM (SELECT Rate AS A 
+					FROM onco_cancer_site_breakdown 
+					WHERE CancerSite = "All Sites" AND Year < 2012 AND Year > 2001 AND RaceEthnicity = "All (includes Hispanic)" AND Sex = "Both Sexes") AS result;
+		';
 		$stmt = $conn->prepare($sql);
 		try {
 			$stmt->execute();
@@ -98,7 +102,28 @@ if (isset($_POST['submit'])) {
 		}
 		$output = '<p>' . $data . ' of every 100,000 people had any kind of cancer in the last decade in the US.</p>';
 	} else if ($_GET['a'] == 2) {
-		$output = '2';
+		$sql = 'SELECT MaleCancerSite, ABS(MaleRate - FemaleRate)
+				FROM (SELECT CancerSite AS MaleCancerSite, Rate AS MaleRate
+					FROM onco_cancer_site_breakdown
+					WHERE Year = 2012 and RaceEthnicity = "All (includes Hispanic)" AND Sex = "Male" AND Rate <> -1) AS result,
+					(SELECT CancerSite AS FemaleCancerSite, Rate AS FemaleRate
+					FROM onco_cancer_site_breakdown
+					WHERE Year = 2012 and RaceEthnicity = "All (includes Hispanic)" AND Sex = "Female" AND Rate <> -1) AS result2
+				WHERE MaleCancerSite = FemaleCancerSite
+				ORDER BY ABS(MaleRate - FemaleRate);
+		';
+		$stmt = $conn->prepare($sql);
+		try {
+			$output = '<p>Cancers that have the greatest difference in rates between the two sexes in 2012.</p><table><tr><th>Cancer</th><th>Difference in Rates</th></tr>';
+			$stmt->execute();
+			while ($row = $stmt->fetch(PDO::FETCH_NUM, PDO::FETCH_ORI_NEXT)) {
+				$output .= '<tr><td>' . $row[0] . '</td><td>' . $row[1] . '</td></tr>';
+		    }
+		    $output .= '</table>';
+		    $stmt = null;
+		} catch(PDOException $e) {
+			header('location: sorry.html');
+		}
 	} else if ($_GET['a'] == 3) {
 		$output = '3';
 	} else if ($_GET['a'] == 4) {
@@ -149,19 +174,21 @@ if (isset($_POST['submit'])) {
 </head>
 
 <body>
-    <div id="main">
-        <div class="grid">
-            <h1>Oncobase</h1>
-	        <?php print $output; ?>
-            <div id="back-home">
-                <a href="index.html">Find another cancer stat</a>
-            </div>
-        </div>
-    </div>
-    
-    <footer>
-        <h6>© ONCOBASE. ALL RIGHTS RESERVED 2015</h6>
-    </footer>
+	<div id="wrapper">
+	    <div id="main">
+	        <div class="grid">
+	            <h1>Oncobase</h1>
+		        <?php print $output; ?>
+	            <div id="back-home">
+	                <a href="index.html">Find another cancer stat</a>
+	            </div>
+	        </div>
+	    </div>
+	    
+	    <footer>
+	        <h6>© ONCOBASE. ALL RIGHTS RESERVED 2015</h6>
+	    </footer>
+	</div>
 
     <script type="text/javascript" src="js/jquery.js"></script>
     <script type="text/javascript" src="js/style.js"></script>

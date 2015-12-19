@@ -11,6 +11,11 @@ window.onload = function() {
 
 function sizeitup() {
 	var bodyH = $(window).height();
+	if ($("#main").height() > (bodyH - 200)) {
+		$("#main, footer").addClass('static');
+	} else {
+		$("#main, footer").removeClass('static');
+	}
 }
 
 $("#more").click(function() {
