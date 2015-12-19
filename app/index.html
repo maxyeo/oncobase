@@ -31,10 +31,11 @@
             <h1>Oncobase</h1>
             <form name="howmany" id="how-many" method="post" action="query.php">
                 <div class="cf">
-                    <p>How many</p>
+                    <p>How many per 100,000</p>
                     <select name="race">
                         <option value="All (includes Hispanic)">people</option>
-                        <option value="Asian">Asians</option>
+                        <option value="White (includes Hispanic)">whites</option>
+                        <option value="Black (includes Hispanic)">blacks</option>
                     </select>
                     <select name="gender">
                         <option value="Both Sexes">of all sexes</option>
@@ -138,7 +139,7 @@
                         <option value="2011">2011</option>
                         <option value="2012">2012</option>
                     </select>
-                    <p>?</p>
+                    <p>in the US?</p>
                 </div>
                 <input type="submit" name="submit" value="submit">
             </form>
