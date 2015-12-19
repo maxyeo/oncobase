@@ -1,0 +1,87 @@
+/**
+ * 5.0 Content
+ */
+
+h1, h2, h3, h4, h5 ,h6 {
+    font-family: "PT Sans", sans-serif;
+    font-weight: 400;
+}
+
+* {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+html, body {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    background: -webkit-radial-gradient(rgba(124, 198, 234, 0.65) 10%, rgba(124, 118, 214, 0.4) 70%), linear-gradient(135deg, rgba(255, 110, 200, 0.4), rgba(140, 255, 255, 0.4)), linear-gradient(-135deg, rgba(125, 125, 195, 0.4), rgba(140, 255, 255, 0.4));
+    background: -o-radial-gradient(rgba(124, 198, 234, 0.65) 10%, rgba(124, 118, 214, 0.4) 70%), linear-gradient(135deg, rgba(255, 110, 200, 0.4), rgba(140, 255, 255, 0.4)), linear-gradient(-135deg, rgba(125, 125, 195, 0.4), rgba(140, 255, 255, 0.4));
+    background: -moz-radial-gradient(rgba(124, 198, 234, 0.65) 10%, rgba(124, 118, 214, 0.4) 70%), linear-gradient(135deg, rgba(255, 110, 200, 0.4), rgba(140, 255, 255, 0.4)), linear-gradient(-135deg, rgba(125, 125, 195, 0.4), rgba(140, 255, 255, 0.4));
+    background: radial-gradient(rgba(124, 198, 234, 0.65) 10%, rgba(124, 118, 214, 0.4) 70%), linear-gradient(135deg, rgba(255, 110, 200, 0.4), rgba(140, 255, 255, 0.4)), linear-gradient(-135deg, rgba(125, 125, 195, 0.4), rgba(140, 255, 255, 0.4));
+}
+
+#main {
+    width: 100%;
+    position: absolute;
+    top: 50%;
+    left: 0;
+    -webkit-transform: translateY(-50%);
+    -moz-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+    text-align: center;
+}
+
+h1 {
+    color: #fff;
+    margin: 0 auto 20px;
+    font-size: 56px;
+}
+
+p {
+    color: #fff;
+    font-size: 18px;
+    display: inline-block;
+    margin: 10px 0;
+}
+
+select {
+    margin: auto 5px;
+    background-color: transparent;
+    border: 2px solid #fff;
+    -webkit-border-radius: 0%;
+    -moz-border-radius: 0%;
+    border-radius: 0%;
+    color: #fff;
+    font-size: 18px;
+    text-align: center;
+}
+
+input[type="submit"] {
+    background-color: transparent;
+    border: none;
+    padding: 10px 20px;
+    color: #fff;
+    margin-top: 20px;
+}
+
+
+/**
+ * 6.0 Footer
+ */
+
+footer {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    text-align: center;
+}
+
+footer h6 {
+    color: #fff;
+    opacity: .7;
+}
