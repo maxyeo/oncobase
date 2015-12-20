@@ -89,6 +89,10 @@ select {
     text-align: center;
 }
 
+option {
+    color: #555;
+}
+
 input[type="submit"] {
     background-color: rgba(255,255,255,.2);
     border: none;
