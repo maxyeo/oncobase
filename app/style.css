@@ -77,6 +77,11 @@ p {
     margin: 10px 0;
 }
 
+span.data {
+    font-size: 24px;
+    color: #564EAB;
+}
+
 select {
     margin: auto 5px;
     background-color: transparent;

@@ -49,7 +49,7 @@ if (isset($_POST['submit'])) {
 	if ($data == -1) {
 		$output = "<p>Not enough data was collected to be considered statistically significant</p>";
 	} else {
-		$output = '<p>' . $data . ' of every 100,000 ';
+		$output = '<p><span class="data">' . $data . '</span> of every 100,000 ';
 		if (strcmp($race, 'All (includes Hispanic)') == 0) {
 			if (strcmp($gender, 'Both Sexes') == 0) {
 				$output .= 'people ';
@@ -100,7 +100,7 @@ if (isset($_POST['submit'])) {
 		} catch(PDOException $e) {
 			header('location: sorry.html');
 		}
-		$output = '<p>' . $data . ' of every 100,000 people had any kind of cancer in the last decade in the US.</p>';
+		$output = '<p><span class="data">' . $data . '</span> of every 100,000 people had any kind of cancer in the last decade in the US.</p>';
 	} else if ($_GET['a'] == 2) {
 		$sql = 'SELECT MaleCancerSite, ABS(MaleRate - FemaleRate)
 				FROM (SELECT CancerSite AS MaleCancerSite, Rate AS MaleRate
@@ -145,7 +145,7 @@ if (isset($_POST['submit'])) {
 		} catch(PDOException $e) {
 			header('location: sorry.html');
 		}
-		$output = '<p>The difference in rates between the most common type of cancer for women and the least common type of cancer for men in 2002 is ' . $data . ' incidents per 100,000 people.</p>';
+		$output = '<p>The difference in rates between the most common type of cancer for women and the least common type of cancer for men in 2002 is <span class="data">' . $data . '</span> incidents per 100,000 people.</p>';
 	} else if ($_GET['a'] == 4) {
 		$sql = 'SELECT Rate2012 - Rate1975
 				FROM (SELECT Rate as Rate2012
@@ -165,7 +165,7 @@ if (isset($_POST['submit'])) {
 		} catch(PDOException $e) {
 			header('location: sorry.html');
 		}
-		$output = '<p>The difference in cancer rates in 1975 and cancer rates in 2012 (negative meaning cancer rates have gone down over the years) is ' . $data . ' of every 100,000 people.</p>';
+		$output = '<p>The difference in cancer rates in 1975 and cancer rates in 2012 (negative meaning cancer rates have gone down over the years) is <span class="data">' . $data . '</span> of every 100,000 people.</p>';
 	} else if ($_GET['a'] == 5) {
 		$sql = 'SELECT RaceEthnicity, CancerSite, Rate
 				FROM (SELECT RaceEthnicity AS RaceEthnicityInQuestion, MAX(Rate) AS MaxRate
@@ -202,7 +202,7 @@ if (isset($_POST['submit'])) {
 		} catch(PDOException $e) {
 			header('location: sorry.html');
 		}
-		$output = '<p>' . $data . ' of every 100,000 black males have developed prostate cancer in the past fifteen years.</p>';
+		$output = '<p><span class="data">' . $data . '</span> of every 100,000 black males have developed prostate cancer in the past fifteen years.</p>';
 	} else if ($_GET['a'] == 7) {
 		$sql = 'SELECT 2012Rate - 1987Rate
 				FROM (SELECT Rate AS 2012Rate
@@ -222,7 +222,7 @@ if (isset($_POST['submit'])) {
 		} catch(PDOException $e) {
 			header('location: sorry.html');
 		}
-		$output = '<p>The difference in the rate of cancer for breast cancer (non-in situ breast cancer) in the past twenty-five years for white females, where a negative number indicates a decrease over the years is ' . $data . ' of every 100,000.</p>';
+		$output = '<p>The difference in the rate of cancer for breast cancer (non-in situ breast cancer) in the past twenty-five years for white females, where a negative number indicates a decrease over the years is <span class="data">' . $data . '</span> of every 100,000.</p>';
 	} else if ($_GET['a'] == 8) {
 		$sql = 'SELECT 2012CancerSite AS IncreasedCancerSites
 				FROM (SELECT CancerSite AS 2012CancerSite, Rate AS 2012Rate
