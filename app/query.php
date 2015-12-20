@@ -79,7 +79,7 @@ if (isset($_POST['submit'])) {
 		if (strcmp($cancer, 'All Sites') == 0) {
 			$output .= 'any kind of ';
 		} else {
-			$output .= $cancer;
+			$output .= strtolower($cancer);
 		}
 		$output .= ' cancer in ' . $year . ' in the US.</p>';	
 	}
