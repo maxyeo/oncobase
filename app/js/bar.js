@@ -1,5 +1,11 @@
-var race, gender, cancer, str
-var data;
+var race, gender, cancer, str;
+
+$(document).ready(function() {  
+	showData();
+});
+window.onload = function() {
+	showData();
+};
 
 function showData() {
 	race = $('#race').val();
@@ -78,7 +84,7 @@ var svg = d3.select("#graph").append("svg")
 function visual(input) {
 	d3.json(input, function(data) {
 
-		if (data == '[]') {
+		if (data.length == 0) {
 			nodata();
 		} else {
 			console.log(data);
