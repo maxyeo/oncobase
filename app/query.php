@@ -46,6 +46,9 @@ if (isset($_POST['submit'])) {
 	} else {
 		header('location: sorry.html');
 	}
+	if (!isset($data)) {
+		$data = 0;
+	}
 	if ($data == -1) {
 		$output = "<p>Not enough data was collected to be considered statistically significant</p>";
 	} else {
@@ -298,6 +301,7 @@ if (isset($_POST['submit'])) {
 	</div>
 
     <script type="text/javascript" src="js/jquery.js"></script>
+    <script src="//d3js.org/d3.v3.min.js" charset="utf-8"></script>
     <script type="text/javascript" src="js/style.js"></script>
 </body>
 </html>
