@@ -13,29 +13,6 @@ function showData() {
 	cancer = $('#cancer').val();
 	str = 'years.php?race=' + race + '&gender=' + gender + '&cancer=' + cancer;
 	visual(str);
-	// if (window.XMLHttpRequest) {
-	// 	xmlhttp = new XMLHttpRequest();
-	// } else {
-	// 	xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
-	// }
-	// xmlhttp.onreadystatechange = function() {
-	// 	if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-	// 		data = xmlhttp.responseText;
-	// 		if (data == 'Bad Request') {
-	// 			sorry();
-	// 		} else if (data == '[]') {
-	// 			nodata();
-	// 		} else {
-	// 			console.log(data);
-	// 		}
-	// 	} else if (xmlhttp.readyState == 4 && xmlhttp.status == 404) {
-	// 		sorry();
-	// 	} else {
-	// 		console.log('waiting');
-	// 	}
-	// }
-	// xmlhttp.open("GET", "years.php?" + str, true);
-	// xmlhttp.send();
 }
 
 function sorry() {
