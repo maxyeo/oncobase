@@ -126,7 +126,8 @@ input[type="submit"]:hover {
     background-color: rgba(255,255,255,.27);
 }
 
-a#more {
+a#more,
+h5#less {
     color: #fff;
     margin-top: 20px;
     display: inline-block;
@@ -138,6 +139,7 @@ a#more {
 #other-queries {
     opacity: 0;
     visibility: hidden;
+    text-align: center;
     -webkit-transition: opacity .3s, visibility .3s;
     -moz-transition: opacity .3s, visibility .3s;
     transition: opacity .3s, visibility .3s;
@@ -173,6 +175,7 @@ a#more {
 
 ul {
     padding: 0;
+    text-align: left;
 }
 
 table {

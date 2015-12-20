@@ -22,3 +22,8 @@ $("#more").click(function() {
 	$("#main").addClass("other");
 	$("#other-queries").addClass("other");
 })
+
+$("#less").click(function() {
+	$("#main").removeClass("other");
+	$("#other-queries").removeClass("other");
+})

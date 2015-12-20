@@ -125,19 +125,73 @@ if (isset($_POST['submit'])) {
 			header('location: sorry.html');
 		}
 	} else if ($_GET['a'] == 3) {
-		$output = '3';
+		$sql = 'SELECT ABS(MinMaleRate - MaxFemaleRate)
+				FROM (SELECT MIN(MaleRate) AS MinMaleRate
+					FROM (SELECT Rate AS MaleRate
+						FROM onco_cancer_site_breakdown
+						WHERE Year = 2002 AND RaceEthnicity = "All (includes Hispanic)" AND Sex = "Male" AND CancerSite <> "All Sites" AND Rate <> -1) AS result) AS result2,
+					(SELECT MAX(FemaleRate) AS MaxFemaleRate
+					FROM (SELECT Rate AS FemaleRate
+						FROM onco_cancer_site_breakdown
+						WHERE Year = 2002 AND RaceEthnicity = "All (includes Hispanic)" AND Sex = "Female" AND CancerSite <> "All Sites" AND Rate <> -1) AS result3) AS result4;
+		';
+		$stmt = $conn->prepare($sql);
+		try {
+			$stmt->execute();
+			while ($row = $stmt->fetch(PDO::FETCH_NUM, PDO::FETCH_ORI_NEXT)) {
+				$data = $row[0];
+		    }
+		    $stmt = null;
+		} catch(PDOException $e) {
+			header('location: sorry.html');
+		}
+		$output = '<p>The difference in rates between the most common type of cancer for women and the least common type of cancer for men in 2002 is ' . $data . ' incidents per 100,000 people.</p>';
 	} else if ($_GET['a'] == 4) {
-		$output = '4';
+		$sql = '
+		';
+		$stmt = $conn->prepare($sql);
+		try {
+			$stmt->execute();
+			while ($row = $stmt->fetch(PDO::FETCH_NUM, PDO::FETCH_ORI_NEXT)) {
+				$data = $row[0];
+		    }
+		    $stmt = null;
+		} catch(PDOException $e) {
+			header('location: sorry.html');
+		}
+		$output = '<p>' . $data . ' of every 100,000 people had any kind of cancer in the last decade in the US.</p>';
 	} else if ($_GET['a'] == 5) {
 		$output = '5';
 	} else if ($_GET['a'] == 6) {
-		$output = '6';
+		$sql = '
+		';
+		$stmt = $conn->prepare($sql);
+		try {
+			$stmt->execute();
+			while ($row = $stmt->fetch(PDO::FETCH_NUM, PDO::FETCH_ORI_NEXT)) {
+				$data = $row[0];
+		    }
+		    $stmt = null;
+		} catch(PDOException $e) {
+			header('location: sorry.html');
+		}
+		$output = '<p>' . $data . ' of every 100,000 people had any kind of cancer in the last decade in the US.</p>';
 	} else if ($_GET['a'] == 7) {
-		$output = '7';
+		$sql = '
+		';
+		$stmt = $conn->prepare($sql);
+		try {
+			$stmt->execute();
+			while ($row = $stmt->fetch(PDO::FETCH_NUM, PDO::FETCH_ORI_NEXT)) {
+				$data = $row[0];
+		    }
+		    $stmt = null;
+		} catch(PDOException $e) {
+			header('location: sorry.html');
+		}
+		$output = '<p>' . $data . ' of every 100,000 people had any kind of cancer in the last decade in the US.</p>';
 	} else if ($_GET['a'] == 8) {
 		$output = '8';
-	} else if ($_GET['a'] == 9) {
-		$output = '9';
 	} else {
 		$output = '<p>Invalid Query</p>';
 	}
