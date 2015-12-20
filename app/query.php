@@ -110,7 +110,7 @@ if (isset($_POST['submit'])) {
 					FROM onco_cancer_site_breakdown
 					WHERE Year = 2012 and RaceEthnicity = "All (includes Hispanic)" AND Sex = "Female" AND Rate <> -1) AS result2
 				WHERE MaleCancerSite = FemaleCancerSite
-				ORDER BY ABS(MaleRate - FemaleRate);
+				ORDER BY ABS(MaleRate - FemaleRate) DESC;
 		';
 		$stmt = $conn->prepare($sql);
 		try {
@@ -147,7 +147,13 @@ if (isset($_POST['submit'])) {
 		}
 		$output = '<p>The difference in rates between the most common type of cancer for women and the least common type of cancer for men in 2002 is ' . $data . ' incidents per 100,000 people.</p>';
 	} else if ($_GET['a'] == 4) {
-		$sql = '
+		$sql = 'SELECT Rate2012 - Rate1975
+				FROM (SELECT Rate as Rate2012
+					FROM onco_cancer_site_breakdown
+					WHERE Year = "2012" AND RaceEthnicity = "All (includes Hispanic)" AND Sex = "Both Sexes" AND CancerSite = "All Sites" AND Rate <> -1) AS result,
+					(SELECT Rate as Rate1975
+					FROM onco_cancer_site_breakdown
+					WHERE Year = "1975" AND RaceEthnicity = "All (includes Hispanic)" AND Sex = "Both Sexes" AND CancerSite = "All Sites" AND Rate <> -1) AS result2;
 		';
 		$stmt = $conn->prepare($sql);
 		try {
@@ -159,11 +165,32 @@ if (isset($_POST['submit'])) {
 		} catch(PDOException $e) {
 			header('location: sorry.html');
 		}
-		$output = '<p>' . $data . ' of every 100,000 people had any kind of cancer in the last decade in the US.</p>';
+		$output = '<p>The difference in cancer rates in 1975 and cancer rates in 2012 (negative meaning cancer rates have gone down over the years) is ' . $data . ' of every 100,000 people.</p>';
 	} else if ($_GET['a'] == 5) {
-		$output = '5';
+		$sql = 'SELECT RaceEthnicity, CancerSite, Rate
+				FROM (SELECT RaceEthnicity AS RaceEthnicityInQuestion, MAX(Rate) AS MaxRate
+					FROM onco_cancer_site_breakdown
+					WHERE Year = 1996 AND Sex = "Both Sexes" AND CancerSite <> "All Sites"
+					AND Rate <> -1
+					GROUP BY RaceEthnicity) AS result, onco_cancer_site_breakdown WHERE Rate = MaxRate AND RaceEthnicity = RaceEthnicityInQuestion;
+		';
+		$stmt = $conn->prepare($sql);
+		try {
+			$output = '<p>The most common types of cancers for each racial subgroup in 1996.</p><table><tr><th>Race</th><th>Cancer</th><th>Rate</th></tr>';
+			$stmt->execute();
+			while ($row = $stmt->fetch(PDO::FETCH_NUM, PDO::FETCH_ORI_NEXT)) {
+				$output .= '<tr><td>' . $row[0] . '</td><td>' . $row[1] . '</td><td>' . $row[2] . '</td></tr>';
+		    }
+		    $output .= '</table>';
+		    $stmt = null;
+		} catch(PDOException $e) {
+			header('location: sorry.html');
+		}
 	} else if ($_GET['a'] == 6) {
-		$sql = '
+		$sql = 'SELECT SUM(YearRate)
+				FROM (SELECT Rate AS YearRate
+					FROM onco_cancer_site_breakdown
+					WHERE Year > 1997 AND Year < 2013 AND CancerSite = "Prostate" AND Sex = "Male" AND Rate <> -1 AND RaceEthnicity = "Black (includes Hispanic)") AS Result;
 		';
 		$stmt = $conn->prepare($sql);
 		try {
@@ -175,9 +202,15 @@ if (isset($_POST['submit'])) {
 		} catch(PDOException $e) {
 			header('location: sorry.html');
 		}
-		$output = '<p>' . $data . ' of every 100,000 people had any kind of cancer in the last decade in the US.</p>';
+		$output = '<p>' . $data . ' of every 100,000 black males have developed prostate cancer in the past fifteen years.</p>';
 	} else if ($_GET['a'] == 7) {
-		$sql = '
+		$sql = 'SELECT 2012Rate - 1987Rate
+				FROM (SELECT Rate AS 2012Rate
+					FROM onco_cancer_site_breakdown
+					WHERE Year = 2012 AND RaceEthnicity = "White (includes Hispanic)" AND Sex = "Female" AND CancerSite = "Female Breast" AND Rate <> -1) AS result,
+					(SELECT Rate AS 1987Rate
+					FROM onco_cancer_site_breakdown
+					WHERE Year = 1987 AND RaceEthnicity = "White (includes Hispanic)" AND Sex = "Female" AND CancerSite = "Female Breast" AND Rate <> -1) AS result2;
 		';
 		$stmt = $conn->prepare($sql);
 		try {
@@ -189,9 +222,29 @@ if (isset($_POST['submit'])) {
 		} catch(PDOException $e) {
 			header('location: sorry.html');
 		}
-		$output = '<p>' . $data . ' of every 100,000 people had any kind of cancer in the last decade in the US.</p>';
+		$output = '<p>The difference in the rate of cancer for breast cancer (non-in situ breast cancer) in the past twenty-five years for white females, where a negative number indicates a decrease over the years is ' . $data . ' of every 100,000.</p>';
 	} else if ($_GET['a'] == 8) {
-		$output = '8';
+		$sql = 'SELECT 2012CancerSite AS IncreasedCancerSites
+				FROM (SELECT CancerSite AS 2012CancerSite, Rate AS 2012Rate
+					FROM onco_cancer_site_breakdown
+					WHERE Year = 2012 AND RaceEthnicity = "All (includes Hispanic)" AND Sex = "Both Sexes" AND CancerSite <> "All Sites" AND Rate <> -1) AS result,
+					(SELECT CancerSite AS 1987CancerSite, Rate AS 1987Rate
+					FROM onco_cancer_site_breakdown
+					WHERE Year = 1987 AND RaceEthnicity = "All (includes Hispanic)" AND Sex = "Both Sexes" AND CancerSite <> "All Sites" AND Rate <> -1) AS result2
+				WHERE 2012CancerSite = 1987CancerSite AND 2012Rate >= 1987Rate;
+		';
+		$stmt = $conn->prepare($sql);
+		try {
+			$output = '<p>cancers have not decreased in rates of incidence from 1975 to 2012.</p><table><tr><th>Cancer</th></tr>';
+			$stmt->execute();
+			while ($row = $stmt->fetch(PDO::FETCH_NUM, PDO::FETCH_ORI_NEXT)) {
+				$output .= '<tr><td>' . $row[0] . '</td></tr>';
+		    }
+		    $output .= '</table>';
+		    $stmt = null;
+		} catch(PDOException $e) {
+			header('location: sorry.html');
+		}
 	} else {
 		$output = '<p>Invalid Query</p>';
 	}
