@@ -28,6 +28,13 @@ html, body {
     background: radial-gradient(rgba(124, 198, 234, 0.65) 10%, rgba(124, 118, 214, 0.4) 70%), linear-gradient(135deg, rgba(255, 110, 200, 0.4), rgba(140, 255, 255, 0.4)), linear-gradient(-135deg, rgba(125, 125, 195, 0.4), rgba(140, 255, 255, 0.4));
 }
 
+#wrapper {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow-y: auto;
+}
+
 #main {
     width: 100%;
     position: absolute;
@@ -48,6 +55,13 @@ html, body {
     opacity: 0;
     visibility: hidden;
 }
+#main.static {
+    position: static;
+    -webkit-transform: translateY(0%);
+    -moz-transform: translateY(0%);
+    -ms-transform: translateY(0%);
+    transform: translateY(0%);
+}
 
 h1 {
     color: #fff;
@@ -63,6 +77,11 @@ p {
     margin: 10px 0;
 }
 
+span.data {
+    font-size: 24px;
+    color: #564EAB;
+}
+
 select {
     margin: auto 5px;
     background-color: transparent;
@@ -73,6 +92,10 @@ select {
     color: #fff;
     font-size: 18px;
     text-align: center;
+}
+
+option {
+    color: #555;
 }
 
 input[type="submit"] {
@@ -112,7 +135,8 @@ input[type="submit"]:hover {
     background-color: rgba(255,255,255,.27);
 }
 
-a#more {
+a#more,
+h5#less {
     color: #fff;
     margin-top: 20px;
     display: inline-block;
@@ -124,6 +148,7 @@ a#more {
 #other-queries {
     opacity: 0;
     visibility: hidden;
+    text-align: center;
     -webkit-transition: opacity .3s, visibility .3s;
     -moz-transition: opacity .3s, visibility .3s;
     transition: opacity .3s, visibility .3s;
@@ -159,6 +184,16 @@ a#more {
 
 ul {
     padding: 0;
+    text-align: left;
+}
+
+table {
+    margin: 0 auto;
+    color: #fff;
+}
+
+th {
+    border-bottom: 2px solid #fff;
 }
 
 /**
@@ -171,6 +206,9 @@ footer {
     left: 0;
     width: 100%;
     text-align: center;
+}
+footer.static {
+    position: static;
 }
 
 footer h6 {

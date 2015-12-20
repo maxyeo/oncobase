@@ -25,170 +25,165 @@
 </head>
 
 <body>
-
-    <div id="main">
-        <div class="grid">
-            <h1>Oncobase</h1>
-            <form name="howmany" id="how-many" method="post" action="query.php">
-                <div class="cf">
-                    <p>How many per 100,000</p>
-                    <select name="race">
-                        <option value="All (includes Hispanic)">people</option>
-                        <option value="White (includes Hispanic)">whites</option>
-                        <option value="Black (includes Hispanic)">blacks</option>
-                    </select>
-                    <select name="gender">
-                        <option value="Both Sexes">of all sexes</option>
-                        <option value="Male">males</option>
-                        <option value="Female">females</option>
-                    </select>
-                    <p>had</p>
-                    <select name="cancer">
-                        <option value="All Sites">any kind of</option>
-                        <option value="Acute Lymphocytic Leukemia">Acute Lymphocytic Leukemia</option>
-                        <option value="Acute Monocytic Leukemia">Acute Monocytic Leukemia</option>
-                        <option value="Acute Myeloid Leukemia">Acute Myeloid Leukemia</option>
-                        <option value="Anus, anal canal & anorectum">Anus, anal canal & anorectum</option>
-                        <option value="Bones and Joints">Bones and Joints</option>
-                        <option value="Brain and Other Nervous System">Brain and Other Nervous System</option>
-                        <option value="Breast (In Situ), Female">Breast (In Situ), Female</option>
-                        <option value="Cervix Uteri">Cervix Uteri</option>
-                        <option value="Chronic Lymphocytic Leukemia">Chronic Lymphocytic Leukemia</option>
-                        <option value="Chronic Myeloid Leukemia">Chronic Myeloid Leukemia</option>
-                        <option value="Colon">Colon</option>
-                        <option value="Colon and Rectum">Colon and Rectum</option>
-                        <option value="Corpus and Uterus, NOS">Corpus and Uterus, NOS</option>
-                        <option value="Digestive system">Digestive system</option>
-                        <option value="Esophagus">Esophagus</option>
-                        <option value="Eye and Orbit">Eye and Orbit</option>
-                        <option value="Female Breast">Female Breast</option>
-                        <option value="Female genital system">Female genital system</option>
-                        <option value="Floor of mouth">Floor of mouth</option>
-                        <option value="Gallbladder">Gallbladder</option>
-                        <option value="Gum & other mouth">Gum & other mouth</option>
-                        <option value="Hodgkin Lymphoma">Hodgkin Lymphoma</option>
-                        <option value="Kaposi Sarcoma">Kaposi Sarcoma</option>
-                        <option value="Kidney and Renal Pelvis">Kidney and Renal Pelvis</option>
-                        <option value="Larynx">Larynx</option>
-                        <option value="Leukemia">Leukemia</option>
-                        <option value="Lip">Lip</option>
-                        <option value="Liver and Intrahepatic Bile Duct">Liver and Intrahepatic Bile Duct</option>
-                        <option value="Lung and Bronchus">Lung and Bronchus</option>
-                        <option value="Lymphocytic Leukemia">Lymphocytic Leukemia</option>
-                        <option value="Melanoma of the Skin">Melanoma</option>
-                        <option value="Mesothelioma">Mesothelioma</option>
-                        <option value="Myeloid and Monocytic Leukemia">Myeloid and Monocytic Leukemia</option>
-                        <option value="Myeloma">Myeloma</option>
-                        <option value="Non-Hodgkin Lymphoma">Non-Hodgkin Lymphoma</option>
-                        <option value="Oral Cavity and Pharynx">Oral Cavity and Pharynx</option>
-                        <option value="Oropharynx & Tonsil">Oropharynx & Tonsil</option>
-                        <option value="Ovary">Ovary</option>
-                        <option value="Pancreas">Pancreas</option>
-                        <option value="Prostate">Prostate</option>
-                        <option value="Rectum">Rectum</option>
-                        <option value="Salivary gland">Salivary gland</option>
-                        <option value="Small intestine">Small intestine</option>
-                        <option value="Soft Tissue includes Heart">Soft Tissue includes Heart</option>
-                        <option value="Soft Tissue including Heart">Soft Tissue including Heart</option>
-                        <option value="Stomach">Stomach</option>
-                        <option value="Testis">Testis</option>
-                        <option value="Thyroid">Thyroid</option>
-                        <option value="Tongue">Tongue</option>
-                        <option value="Urinary Bladder (Invasive & In Situ)">Urinary Bladder</option>
-                        <option value="Vagina">Vagina</option>
-                        <option value="Vulva">Vulva</option>
-                    </select>
-                    <p>cancer in</p>
-                    <select name="year">
-                        <option value="1975">1975</option>
-                        <option value="1976">1976</option>
-                        <option value="1977">1977</option>
-                        <option value="1978">1978</option>
-                        <option value="1979">1979</option>
-                        <option value="1980">1980</option>
-                        <option value="1981">1981</option>
-                        <option value="1982">1982</option>
-                        <option value="1983">1983</option>
-                        <option value="1984">1984</option>
-                        <option value="1985">1985</option>
-                        <option value="1986">1986</option>
-                        <option value="1987">1987</option>
-                        <option value="1988">1988</option>
-                        <option value="1989">1989</option>
-                        <option value="1990">1990</option>
-                        <option value="1991">1991</option>
-                        <option value="1992">1992</option>
-                        <option value="1993">1993</option>
-                        <option value="1994">1994</option>
-                        <option value="1995">1995</option>
-                        <option value="1996">1996</option>
-                        <option value="1997">1997</option>
-                        <option value="1998">1998</option>
-                        <option value="1999">1999</option>
-                        <option value="2000">2000</option>
-                        <option value="2001">2001</option>
-                        <option value="2002">2002</option>
-                        <option value="2003">2003</option>
-                        <option value="2004">2004</option>
-                        <option value="2005">2005</option>
-                        <option value="2006">2006</option>
-                        <option value="2007">2007</option>
-                        <option value="2008">2008</option>
-                        <option value="2009">2009</option>
-                        <option value="2010">2010</option>
-                        <option value="2011">2011</option>
-                        <option value="2012">2012</option>
-                    </select>
-                    <p>in the US?</p>
-                </div>
-                <input type="submit" name="submit" value="Find Out!">
-            </form>
-            <a id="more">or find another stat</a>
+    <div id="wrapper">
+        <div id="main">
+            <div class="grid">
+                <h1>Oncobase</h1>
+                <form name="howmany" id="how-many" method="post" action="query.php">
+                    <div class="cf">
+                        <p>How many per 100,000</p>
+                        <select name="race">
+                            <option value="All (includes Hispanic)">people</option>
+                            <option value="White (includes Hispanic)">whites</option>
+                            <option value="Black (includes Hispanic)">blacks</option>
+                        </select>
+                        <select name="gender">
+                            <option value="Both Sexes">of all sexes</option>
+                            <option value="Male">males</option>
+                            <option value="Female">females</option>
+                        </select>
+                        <p>had</p>
+                        <select name="cancer">
+                            <option value="All Sites">any kind of</option>
+                            <option value="Acute Lymphocytic Leukemia">Acute Lymphocytic Leukemia</option>
+                            <option value="Acute Monocytic Leukemia">Acute Monocytic Leukemia</option>
+                            <option value="Acute Myeloid Leukemia">Acute Myeloid Leukemia</option>
+                            <option value="Anus, anal canal & anorectum">Anus, anal canal & anorectum</option>
+                            <option value="Bones and Joints">Bones and Joints</option>
+                            <option value="Brain and Other Nervous System">Brain and Other Nervous System</option>
+                            <option value="Breast (In Situ), Female">Breast (In Situ), Female</option>
+                            <option value="Cervix Uteri">Cervix Uteri</option>
+                            <option value="Chronic Lymphocytic Leukemia">Chronic Lymphocytic Leukemia</option>
+                            <option value="Chronic Myeloid Leukemia">Chronic Myeloid Leukemia</option>
+                            <option value="Colon">Colon</option>
+                            <option value="Colon and Rectum">Colon and Rectum</option>
+                            <option value="Corpus and Uterus, NOS">Corpus and Uterus, NOS</option>
+                            <option value="Digestive system">Digestive system</option>
+                            <option value="Esophagus">Esophagus</option>
+                            <option value="Eye and Orbit">Eye and Orbit</option>
+                            <option value="Female Breast">Female Breast</option>
+                            <option value="Female genital system">Female genital system</option>
+                            <option value="Floor of mouth">Floor of mouth</option>
+                            <option value="Gallbladder">Gallbladder</option>
+                            <option value="Gum & other mouth">Gum & other mouth</option>
+                            <option value="Hodgkin Lymphoma">Hodgkin Lymphoma</option>
+                            <option value="Kaposi Sarcoma">Kaposi Sarcoma</option>
+                            <option value="Kidney and Renal Pelvis">Kidney and Renal Pelvis</option>
+                            <option value="Larynx">Larynx</option>
+                            <option value="Leukemia">Leukemia</option>
+                            <option value="Lip">Lip</option>
+                            <option value="Liver and Intrahepatic Bile Duct">Liver and Intrahepatic Bile Duct</option>
+                            <option value="Lung and Bronchus">Lung and Bronchus</option>
+                            <option value="Lymphocytic Leukemia">Lymphocytic Leukemia</option>
+                            <option value="Melanoma of the Skin">Melanoma</option>
+                            <option value="Mesothelioma">Mesothelioma</option>
+                            <option value="Myeloid and Monocytic Leukemia">Myeloid and Monocytic Leukemia</option>
+                            <option value="Myeloma">Myeloma</option>
+                            <option value="Non-Hodgkin Lymphoma">Non-Hodgkin Lymphoma</option>
+                            <option value="Oral Cavity and Pharynx">Oral Cavity and Pharynx</option>
+                            <option value="Oropharynx & Tonsil">Oropharynx & Tonsil</option>
+                            <option value="Ovary">Ovary</option>
+                            <option value="Pancreas">Pancreas</option>
+                            <option value="Prostate">Prostate</option>
+                            <option value="Rectum">Rectum</option>
+                            <option value="Salivary gland">Salivary gland</option>
+                            <option value="Small intestine">Small intestine</option>
+                            <option value="Soft Tissue includes Heart">Soft Tissue includes Heart</option>
+                            <option value="Soft Tissue including Heart">Soft Tissue including Heart</option>
+                            <option value="Stomach">Stomach</option>
+                            <option value="Testis">Testis</option>
+                            <option value="Thyroid">Thyroid</option>
+                            <option value="Tongue">Tongue</option>
+                            <option value="Urinary Bladder (Invasive & In Situ)">Urinary Bladder</option>
+                            <option value="Vagina">Vagina</option>
+                            <option value="Vulva">Vulva</option>
+                        </select>
+                        <p>cancer in</p>
+                        <select name="year">
+                            <option value="1975">1975</option>
+                            <option value="1976">1976</option>
+                            <option value="1977">1977</option>
+                            <option value="1978">1978</option>
+                            <option value="1979">1979</option>
+                            <option value="1980">1980</option>
+                            <option value="1981">1981</option>
+                            <option value="1982">1982</option>
+                            <option value="1983">1983</option>
+                            <option value="1984">1984</option>
+                            <option value="1985">1985</option>
+                            <option value="1986">1986</option>
+                            <option value="1987">1987</option>
+                            <option value="1988">1988</option>
+                            <option value="1989">1989</option>
+                            <option value="1990">1990</option>
+                            <option value="1991">1991</option>
+                            <option value="1992">1992</option>
+                            <option value="1993">1993</option>
+                            <option value="1994">1994</option>
+                            <option value="1995">1995</option>
+                            <option value="1996">1996</option>
+                            <option value="1997">1997</option>
+                            <option value="1998">1998</option>
+                            <option value="1999">1999</option>
+                            <option value="2000">2000</option>
+                            <option value="2001">2001</option>
+                            <option value="2002">2002</option>
+                            <option value="2003">2003</option>
+                            <option value="2004">2004</option>
+                            <option value="2005">2005</option>
+                            <option value="2006">2006</option>
+                            <option value="2007">2007</option>
+                            <option value="2008">2008</option>
+                            <option value="2009">2009</option>
+                            <option value="2010">2010</option>
+                            <option value="2011">2011</option>
+                            <option value="2012">2012</option>
+                        </select>
+                        <p>in the US?</p>
+                    </div>
+                    <input type="submit" name="submit" value="Find Out!">
+                </form>
+                <a id="more">or find another stat</a>
+            </div>
         </div>
-    </div>
 
-    <div id="other-queries">
-        <div class="grid">
-            <h1>Oncobase</h1>
-            <ul class="col-12-16 push-2">
-                <a href="query.php?a=1">
-                    How many people developed any form of cancer in the past decade.
-                </a>
-                <a href="query.php?a=2">
-                    Determine which types of cancer have the greatest difference in rates between the two sexes in 2012
-                </a>
-                <a href="query.php?a=3">
-                    Compute the difference in rates between the most common type of cancer for women and the least common type of cancer for men in 2002
-                </a>
-                <a href="query.php?a=4">
-                    
-                </a>
-                <a href="query.php?a=5">
-                    
-                </a>
-                <a href="query.php?a=5">
-                    
-                </a>
-                <a href="query.php?a=6">
-                    
-                </a>
-                <a href="query.php?a=7">
-                    
-                </a>
-                <a href="query.php?a=8">
-                    
-                </a>
-                <a href="query.php?a=9">
-                    
-                </a>
-            </ul>
+        <div id="other-queries">
+            <div class="grid cf">
+                <h1>Oncobase</h1>
+                <ul class="col-12-16 push-2">
+                    <a href="query.php?a=1">
+                        How many people developed any form of cancer in the past decade.
+                    </a>
+                    <a href="query.php?a=2">
+                        Determine which types of cancer have the greatest difference in rates between the two sexes in 2012
+                    </a>
+                    <a href="query.php?a=3">
+                        Compute the difference in rates between the most common type of cancer for women and the least common type of cancer for men in 2002
+                    </a>
+                    <a href="query.php?a=4">
+                        Compute the difference in cancer rates in 1975 and cancer rates in 2012 (negative meaning cancer rates have gone down over the years).
+                    </a>
+                    <a href="query.php?a=5">
+                        Determine the most common types of cancers for each racial subgroup in 1996.
+                    </a>
+                    <a href="query.php?a=6">
+                        Compute the total incidence rate of black males who have developed prostate cancer in the past fifteen years.
+                    </a>
+                    <a href="query.php?a=7">
+                        Compute the difference in the rate of cancer for breast cancer (non-in situ breast cancer) in the past twenty-five years for white females, where a negative number indicates a decrease over the years.
+                    </a>
+                    <a href="query.php?a=8">
+                        Determine what, if any, types of cancers have not decreased in rates of incidence from 1975 to 2012.
+                    </a>
+                </ul>
+            </div>
+            <h5 id="less">Back to Oncobase</h5>
         </div>
+        
+        <footer>
+            <h6>© ONCOBASE. ALL RIGHTS RESERVED 2015</h6>
+        </footer>
     </div>
-    
-    <footer>
-        <h6>© ONCOBASE. ALL RIGHTS RESERVED 2015</h6>
-    </footer>
-
     <script type="text/javascript" src="js/jquery.js"></script>
     <script type="text/javascript" src="js/style.js"></script>
 </body>
