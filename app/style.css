@@ -196,6 +196,40 @@ th {
     border-bottom: 2px solid #fff;
 }
 
+/* Bar Chart */
+#graph {
+    height: 500px;
+    width: 100%;
+    position: relative;
+}
+
+.axis text {
+    font: 10px sans-serif;
+    stroke: #fff;
+}
+
+.axis path,
+.axis line {
+    fill: none;
+    stroke: #fff;
+    shape-rendering: crispEdges;
+}
+
+.bar {
+    fill: #fff;
+    fill-opacity: .5;
+}
+
+.x.axis path {
+    display: none;
+}
+
+label {
+    display: block;
+    color: #fff;
+}
+/* Bar End Chart */
+
 /**
  * 6.0 Footer
  */
