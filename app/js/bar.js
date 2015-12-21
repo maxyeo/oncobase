@@ -69,7 +69,7 @@ function visual(input) {
 
 			data.forEach(function(d) {
 				d.letter = d[0];
-				d.frequency = d[1];
+				d.frequency = +d[1];
 			});
 
 			x.domain(data.map(function(d) { return String(d.letter).substring(2); }));
