@@ -25,7 +25,7 @@ if (isset($_GET)) {
 	}
 	if (empty($data_missing)) {
 		$sql = 'SELECT Year, Rate
-				FROM akpsi.onco_cancer_site_breakdown
+				FROM akpsi.onco_cancer_breakdown
 				WHERE RaceEthnicity = ? AND Sex = ? AND CancerSite = ?
 		';
 		$stmt = $conn->prepare($sql);
