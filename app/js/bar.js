@@ -68,11 +68,11 @@ function visual(input) {
 			clean();
 
 			data.forEach(function(d) {
-				d.letter = +d[0] % 100;
-				d.frequency = +d[1];
+				d.letter = d[0];
+				d.frequency = d[1];
 			});
 
-			x.domain(data.map(function(d) { return d.letter; }));
+			x.domain(data.map(function(d) { return String(d.letter).substring(2); }));
 			y.domain([0, d3.max(data, function(d) { return d.frequency; })]);
 
 			svg.append("g")
@@ -94,15 +94,15 @@ function visual(input) {
 				.data(data)
 				.enter().append("rect")
 				.attr("class", "bar")
-				.attr("x", function(d) { return x(d.letter); })
+				.attr("x", function(d) { return x(String(d.letter).substring(2) ); })
 				.attr("width", x.rangeBand())
 				.attr("y", function(d) { return y(d.frequency); })
 				.attr("height", function(d) { return height - y(d.frequency); });
 
-			d3.select("input").on("change", change);
+			d3.select("#sort-switch").on("change", change);
 
 			var sortTimeout = setTimeout(function() {
-				d3.select("#sort-switch").property("checked", true).each(change);
+				//d3.select("#sort-switch").property("checked", true).each(change);
 			}, 2000);
 
 			function change() {
@@ -112,18 +112,18 @@ function visual(input) {
 				var x0 = x.domain(data.sort(this.checked
 					? function(a, b) { return b.frequency - a.frequency; }
 					: function(a, b) { return d3.ascending(a.letter, b.letter); })
-					.map(function(d) { return d.letter; }))
+					.map(function(d) { return String(d.letter).substring(2); }))
 					.copy();
 
 				svg.selectAll(".bar")
-					.sort(function(a, b) { return x0(a.letter) - x0(b.letter); });
+					.sort(function(a, b) { return x0(String(a.letter).substring(2) ) - x0(String(b.letter).substring(2) ); });
 
 				var transition = svg.transition().duration(750),
 					delay = function(d, i) { return i * 50; };
 
 				transition.selectAll(".bar")
 					.delay(delay)
-					.attr("x", function(d) { return x0(d.letter); });
+					.attr("x", function(d) { return x0(String(d.letter).substring(2) ); });
 
 				transition.select(".x.axis")
 					.call(xAxis)
