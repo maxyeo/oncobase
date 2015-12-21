@@ -32,7 +32,7 @@ if (isset($_POST['submit'])) {
 		$year = trim($_POST['year']);
 	}
 	if (empty($data_missing)) {
-		$sql = 'SELECT Rate FROM akpsi.onco_cancer_site_breakdown WHERE RaceEthnicity = ? AND Sex = ? AND CancerSite = ? AND Year = ?';
+		$sql = 'SELECT Rate FROM akpsi.onco_cancer_breakdown WHERE RaceEthnicity = ? AND Sex = ? AND CancerSite = ? AND Year = ?';
 		$stmt = $conn->prepare($sql);
 		try {
 			$stmt->execute(array($race, $gender, $cancer, $year));
@@ -90,7 +90,7 @@ if (isset($_POST['submit'])) {
 	if ($_GET['a'] == 1) {
 		$sql = 'SELECT SUM(A)
 				FROM (SELECT Rate AS A 
-					FROM onco_cancer_site_breakdown 
+					FROM onco_cancer_breakdown 
 					WHERE CancerSite = "All Sites" AND Year < 2012 AND Year > 2001 AND RaceEthnicity = "All (includes Hispanic)" AND Sex = "Both Sexes") AS result;
 		';
 		$stmt = $conn->prepare($sql);
@@ -107,10 +107,10 @@ if (isset($_POST['submit'])) {
 	} else if ($_GET['a'] == 2) {
 		$sql = 'SELECT MaleCancerSite, ABS(MaleRate - FemaleRate)
 				FROM (SELECT CancerSite AS MaleCancerSite, Rate AS MaleRate
-					FROM onco_cancer_site_breakdown
+					FROM onco_cancer_breakdown
 					WHERE Year = 2012 and RaceEthnicity = "All (includes Hispanic)" AND Sex = "Male" AND Rate <> -1) AS result,
 					(SELECT CancerSite AS FemaleCancerSite, Rate AS FemaleRate
-					FROM onco_cancer_site_breakdown
+					FROM onco_cancer_breakdown
 					WHERE Year = 2012 and RaceEthnicity = "All (includes Hispanic)" AND Sex = "Female" AND Rate <> -1) AS result2
 				WHERE MaleCancerSite = FemaleCancerSite
 				ORDER BY ABS(MaleRate - FemaleRate) DESC;
@@ -131,11 +131,11 @@ if (isset($_POST['submit'])) {
 		$sql = 'SELECT ABS(MinMaleRate - MaxFemaleRate)
 				FROM (SELECT MIN(MaleRate) AS MinMaleRate
 					FROM (SELECT Rate AS MaleRate
-						FROM onco_cancer_site_breakdown
+						FROM onco_cancer_breakdown
 						WHERE Year = 2002 AND RaceEthnicity = "All (includes Hispanic)" AND Sex = "Male" AND CancerSite <> "All Sites" AND Rate <> -1) AS result) AS result2,
 					(SELECT MAX(FemaleRate) AS MaxFemaleRate
 					FROM (SELECT Rate AS FemaleRate
-						FROM onco_cancer_site_breakdown
+						FROM onco_cancer_breakdown
 						WHERE Year = 2002 AND RaceEthnicity = "All (includes Hispanic)" AND Sex = "Female" AND CancerSite <> "All Sites" AND Rate <> -1) AS result3) AS result4;
 		';
 		$stmt = $conn->prepare($sql);
@@ -152,10 +152,10 @@ if (isset($_POST['submit'])) {
 	} else if ($_GET['a'] == 4) {
 		$sql = 'SELECT Rate2012 - Rate1975
 				FROM (SELECT Rate as Rate2012
-					FROM onco_cancer_site_breakdown
+					FROM onco_cancer_breakdown
 					WHERE Year = "2012" AND RaceEthnicity = "All (includes Hispanic)" AND Sex = "Both Sexes" AND CancerSite = "All Sites" AND Rate <> -1) AS result,
 					(SELECT Rate as Rate1975
-					FROM onco_cancer_site_breakdown
+					FROM onco_cancer_breakdown
 					WHERE Year = "1975" AND RaceEthnicity = "All (includes Hispanic)" AND Sex = "Both Sexes" AND CancerSite = "All Sites" AND Rate <> -1) AS result2;
 		';
 		$stmt = $conn->prepare($sql);
@@ -172,10 +172,10 @@ if (isset($_POST['submit'])) {
 	} else if ($_GET['a'] == 5) {
 		$sql = 'SELECT RaceEthnicity, CancerSite, Rate
 				FROM (SELECT RaceEthnicity AS RaceEthnicityInQuestion, MAX(Rate) AS MaxRate
-					FROM onco_cancer_site_breakdown
+					FROM onco_cancer_breakdown
 					WHERE Year = 1996 AND Sex = "Both Sexes" AND CancerSite <> "All Sites"
 					AND Rate <> -1
-					GROUP BY RaceEthnicity) AS result, onco_cancer_site_breakdown WHERE Rate = MaxRate AND RaceEthnicity = RaceEthnicityInQuestion;
+					GROUP BY RaceEthnicity) AS result, onco_cancer_breakdown WHERE Rate = MaxRate AND RaceEthnicity = RaceEthnicityInQuestion;
 		';
 		$stmt = $conn->prepare($sql);
 		try {
@@ -192,7 +192,7 @@ if (isset($_POST['submit'])) {
 	} else if ($_GET['a'] == 6) {
 		$sql = 'SELECT SUM(YearRate)
 				FROM (SELECT Rate AS YearRate
-					FROM onco_cancer_site_breakdown
+					FROM onco_cancer_breakdown
 					WHERE Year > 1997 AND Year < 2013 AND CancerSite = "Prostate" AND Sex = "Male" AND Rate <> -1 AND RaceEthnicity = "Black (includes Hispanic)") AS Result;
 		';
 		$stmt = $conn->prepare($sql);
@@ -209,10 +209,10 @@ if (isset($_POST['submit'])) {
 	} else if ($_GET['a'] == 7) {
 		$sql = 'SELECT 2012Rate - 1987Rate
 				FROM (SELECT Rate AS 2012Rate
-					FROM onco_cancer_site_breakdown
+					FROM onco_cancer_breakdown
 					WHERE Year = 2012 AND RaceEthnicity = "White (includes Hispanic)" AND Sex = "Female" AND CancerSite = "Female Breast" AND Rate <> -1) AS result,
 					(SELECT Rate AS 1987Rate
-					FROM onco_cancer_site_breakdown
+					FROM onco_cancer_breakdown
 					WHERE Year = 1987 AND RaceEthnicity = "White (includes Hispanic)" AND Sex = "Female" AND CancerSite = "Female Breast" AND Rate <> -1) AS result2;
 		';
 		$stmt = $conn->prepare($sql);
@@ -229,10 +229,10 @@ if (isset($_POST['submit'])) {
 	} else if ($_GET['a'] == 8) {
 		$sql = 'SELECT 2012CancerSite AS IncreasedCancerSites
 				FROM (SELECT CancerSite AS 2012CancerSite, Rate AS 2012Rate
-					FROM onco_cancer_site_breakdown
+					FROM onco_cancer_breakdown
 					WHERE Year = 2012 AND RaceEthnicity = "All (includes Hispanic)" AND Sex = "Both Sexes" AND CancerSite <> "All Sites" AND Rate <> -1) AS result,
 					(SELECT CancerSite AS 1987CancerSite, Rate AS 1987Rate
-					FROM onco_cancer_site_breakdown
+					FROM onco_cancer_breakdown
 					WHERE Year = 1987 AND RaceEthnicity = "All (includes Hispanic)" AND Sex = "Both Sexes" AND CancerSite <> "All Sites" AND Rate <> -1) AS result2
 				WHERE 2012CancerSite = 1987CancerSite AND 2012Rate >= 1987Rate;
 		';
