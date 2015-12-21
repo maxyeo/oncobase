@@ -32,7 +32,7 @@ if (isset($_POST['submit'])) {
 		$year = trim($_POST['year']);
 	}
 	if (empty($data_missing)) {
-		$sql = 'SELECT Rate FROM akpsi.onco_cancer_site_breakdown WHERE RaceEthnicity = ? AND Sex = ? AND CancerSite = ? AND Year = ?';
+		$sql = 'SELECT Rate FROM akpsi.onco_cancer_breakdown WHERE RaceEthnicity = ? AND Sex = ? AND CancerSite = ? AND Year = ?';
 		$stmt = $conn->prepare($sql);
 		try {
 			$stmt->execute(array($race, $gender, $cancer, $year));
